@@ -1,5 +1,5 @@
 {
-  "name": "webdrivertest",
+  "name": "pttCrawler",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,12 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
-    "chromedriver": "^2.43.1",
     "node-cron": "^2.0.3",
-    "node-tesseract": "^0.2.7",
     "nodemailer": "^4.6.8",
-    "request": "^2.88.0",
-    "selenium-webdriver": "^4.0.0-alpha.1",
-    "tesseractocr": "^1.1.1"
+    "request": "^2.88.0"
   }
 }
