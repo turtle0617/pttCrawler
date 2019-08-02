@@ -7,6 +7,6 @@
 1. 抓取 PTT 手機版最新一筆資訊及判定是否為需要資訊
 1. 串接 mail API
 
-##　成果：
-[](https://i.imgur.com/iL5pT19.png)
-[](https://i.imgur.com/bR2WLun.png)
+## 成果：
+![](https://i.imgur.com/lcuJwoI.png)
+![](https://i.imgur.com/bR2WLun.png)
