@@ -1,21 +1,21 @@
 const request = require('request');
 const cheerio = require('cheerio');
 const nodemailer = require('nodemailer');
-var cron = require('node-cron');
-
+const cron = require('node-cron');
+const credentials = require('./credentials');
 const mobilesales_URL = 'https://www.ptt.cc/bbs/mobilesales/index.html';
-const crontab_period = 60 * 5;
-
+const postTimeRange_minutes = 150;
+const running_minutes = 1;
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'qqaz50313@gmail.com',
-    pass: '',
+    user: credentials.gmail.user,
+    pass: credentials.gmail.password,
   },
 });
-
-let task = cron.schedule('*/5 * * * *', () => {
-  console.log('running every 5 minute');
+console.log('pttCrawler Start')
+let task = cron.schedule(`*/${running_minutes} * * * *`, () => {
+  console.log(`running every ${running_minutes} minute`);
   request(mobilesales_URL, mobilesales);
 });
 task.start();
@@ -35,18 +35,15 @@ function mobilesales(error, response, body) {
     }
     return
   }).get()
-
   post_list = post_list.filter(isIphone7);
   // console.log(post_list);
   sendMail(post_list);
 }
 
 function isIphone7(post) {
-  let within_crontab_period = post.timestamp > (Date.now() / 1000 - crontab_period);
-  if (within_crontab_period) {
+  let within_postTimeRange = post.timestamp > (Date.now() / 1000 - (postTimeRange_minutes * 60));
+  if (within_postTimeRange) {
     return !!post.title.match(/(iphone)/i) && !!post.title.match(/7/i);
-
-;
   }
 }
 
@@ -71,10 +68,4 @@ function sendMail(list) {
       console.log('Email sent: ' + info.response);
     }
   });
-}
-
-
-function sliceStr(str, index) {
-  let strReplace = str.replace(/\s/g, "");
-  return strReplace.slice(0, strReplace.indexOf("搜尋同標題文章"))
 }
